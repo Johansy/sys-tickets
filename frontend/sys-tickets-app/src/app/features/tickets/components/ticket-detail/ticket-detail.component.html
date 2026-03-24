@@ -1,0 +1,127 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button routerLink="/tickets"><mat-icon>arrow_back</mat-icon></button>
+  <span>Detalle del Ticket</span>
+</mat-toolbar>
+
+<ng-container *ngIf="loading$ | async">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-container>
+
+<mat-card *ngIf="error$ | async as error" style="background:#fce4ec; margin:16px">
+  <mat-card-content>⚠️ {{ error }}</mat-card-content>
+</mat-card>
+
+<ng-container *ngIf="ticket$ | async as ticket">
+  <div style="display:flex; gap:16px; padding:16px; flex-wrap:wrap;">
+
+    <!-- Panel izquierdo: datos del ticket -->
+    <mat-card style="flex:2; min-width:320px">
+      <mat-card-header>
+        <mat-card-title>#{{ticket.id}} — {{ticket.titulo}}</mat-card-title>
+        <mat-card-subtitle>
+          <span [class]="'priority-' + ticket.prioridad">{{ticket.prioridad | titlecase}}</span>
+          &nbsp;|&nbsp; {{estatusLabels[ticket.estatus]}}
+          &nbsp;|&nbsp; {{ticket.categoriaNombre}}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ticket.descripcion}}</p>
+        <mat-divider></mat-divider>
+        <table style="width:100%; margin-top:12px; font-size:13px">
+          <tr><td><strong>Creado por:</strong></td><td>{{ticket.creadorNombre}}</td></tr>
+          <tr><td><strong>Agente:</strong></td><td>{{ticket.agenteNombre ?? '—'}}</td></tr>
+          <tr><td><strong>Creado:</strong></td><td>{{ticket.fechaCreacion | date:'dd/MM/yyyy HH:mm'}}</td></tr>
+          <tr *ngIf="ticket.fechaResolucion">
+            <td><strong>Resuelto:</strong></td>
+            <td>{{ticket.fechaResolucion | date:'dd/MM/yyyy HH:mm'}}</td>
+          </tr>
+        </table>
+      </mat-card-content>
+
+      <mat-card-actions style="padding:16px; display:flex; gap:12px; flex-wrap:wrap;">
+        <!-- Cambiar estatus -->
+        <mat-form-field appearance="outline" style="min-width:160px">
+          <mat-label>Cambiar estatus</mat-label>
+          <mat-select [(ngModel)]="nuevoEstatus">
+            <mat-option *ngFor="let e of estatus" [value]="e">{{estatusLabels[e]}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-flat-button color="accent" [disabled]="!nuevoEstatus" (click)="cambiarEstatus(ticket)">
+          Actualizar estatus
+        </button>
+
+        <!-- Asignar agente -->
+        <mat-form-field appearance="outline" style="min-width:180px">
+          <mat-label>Asignar agente</mat-label>
+          <mat-select [(ngModel)]="agenteSeleccionado">
+            <mat-option *ngFor="let a of (agentes$ | async)" [value]="a.id">{{a.nombre}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-flat-button color="primary" [disabled]="!agenteSeleccionado" (click)="asignarAgente(ticket)">
+          Asignar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <!-- Panel derecho: comentarios + historial -->
+    <div style="flex:3; min-width:320px; display:flex; flex-direction:column; gap:16px;">
+
+      <!-- Agregar comentario -->
+      <mat-card>
+        <mat-card-header><mat-card-title>Agregar comentario</mat-card-title></mat-card-header>
+        <mat-card-content>
+          <mat-form-field appearance="outline" style="width:100%">
+            <mat-label>Comentario</mat-label>
+            <textarea matInput [(ngModel)]="nuevoComentario" rows="3"
+                [placeholder]="ticket.estatus === 'cerrado' ? 'El ticket está cerrado' : 'Escribe tu comentario...'"
+                [disabled]="ticket.estatus === 'cerrado'"></textarea>
+          </mat-form-field>
+          <div style="display:flex; align-items:center; gap:16px;">
+            <mat-checkbox [(ngModel)]="esInterno">Nota interna</mat-checkbox>
+            <button mat-flat-button color="primary"
+                [disabled]="!nuevoComentario.trim() || ticket.estatus === 'cerrado'"
+              (click)="enviarComentario(ticket)">
+              Enviar
+            </button>
+          </div>
+            <mat-hint *ngIf="ticket.estatus === 'cerrado'" style="color:#c62828; font-size:12px">
+            ⚠️ Cambia el estatus del ticket para poder comentar.
+          </mat-hint>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Lista de comentarios -->
+      <mat-card>
+        <mat-card-header><mat-card-title>Comentarios ({{ticket.comentarios.length}})</mat-card-title></mat-card-header>
+        <mat-card-content>
+          <p *ngIf="!ticket.comentarios.length" style="color:#999">Sin comentarios aún.</p>
+          <div *ngFor="let c of ticket.comentarios" [class]="c.esInterno ? 'internal-comment' : 'public-comment'">
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#666">
+              <strong>{{c.autorNombre}}</strong>
+              <span>{{c.fecha | date:'dd/MM/yyyy HH:mm'}}
+                <mat-chip *ngIf="c.esInterno" style="font-size:10px">🔒 interna</mat-chip>
+              </span>
+            </div>
+            <p style="margin:4px 0 0">{{c.contenido}}</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Historial de cambios (BONUS) -->
+      <mat-card *ngIf="ticket.historial && ticket.historial.length">
+        <mat-card-header><mat-card-title>Historial de cambios</mat-card-title></mat-card-header>
+        <mat-card-content>
+          <div *ngFor="let h of ticket.historial" style="padding:6px 0; border-bottom:1px solid #eee; font-size:13px">
+            <strong>{{h.campoModificado | titlecase}}</strong>:
+            <span style="text-decoration:line-through; color:#999">{{h.valorAnterior ?? '—'}}</span>
+            → <strong>{{h.valorNuevo}}</strong>
+            <span style="float:right; color:#666">
+              {{h.modificadoPorNombre}} · {{h.fechaModificacion | date:'dd/MM/yy HH:mm'}}
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+  </div>
+</ng-container>

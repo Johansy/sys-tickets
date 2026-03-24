@@ -1,0 +1,129 @@
+<mat-toolbar color="primary">
+  <span>Sistema de Tickets</span>
+  <span class="toolbar-spacer"></span>
+  <a mat-raised-button routerLink="/tickets/nuevo">+ Nuevo Ticket</a>
+</mat-toolbar>
+
+<mat-card>
+  <mat-card-content>
+    <!-- Filtros -->
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+      <mat-form-field appearance="outline" style="flex:2; min-width:200px">
+        <mat-label>Buscar por título</mat-label>
+        <input matInput [(ngModel)]="filtroTexto" (keyup.enter)="buscar(1)" placeholder="Escribe para buscar...">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="min-width:160px">
+        <mat-label>Categoría</mat-label>
+        <mat-select [(ngModel)]="filtroCategoria">
+          <mat-option value="">Todas</mat-option>
+          <mat-option *ngFor="let c of (categorias$ | async)" [value]="c.id">{{c.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="min-width:140px">
+        <mat-label>Prioridad</mat-label>
+        <mat-select [(ngModel)]="filtroPrioridad">
+          <mat-option value="">Todas</mat-option>
+          <mat-option *ngFor="let p of prioridades" [value]="p">{{p | titlecase}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="min-width:140px">
+        <mat-label>Estatus</mat-label>
+        <mat-select [(ngModel)]="filtroEstatus">
+          <mat-option value="">Todos</mat-option>
+            <mat-option *ngFor="let e of estatus" [value]="e">{{estatusLabels[e]}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="min-width:160px">
+        <mat-label>Agente</mat-label>
+        <mat-select [(ngModel)]="filtroAgente">
+          <mat-option value="">Todos</mat-option>
+          <mat-option *ngFor="let a of (agentes$ | async)" [value]="a.id">{{a.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div style="display:flex; gap:8px; align-items:center;">
+        <button mat-flat-button color="primary" (click)="buscar(1)">Buscar</button>
+        <button mat-stroked-button (click)="limpiarFiltros()">Limpiar</button>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <mat-progress-bar *ngIf="loading$ | async" mode="indeterminate" style="margin-bottom:8px"></mat-progress-bar>
+
+    <!-- Error -->
+    <mat-error *ngIf="error$ | async as error">{{ error }}</mat-error>
+
+    <!-- Tabla -->
+    <table mat-table [dataSource]="(tickets$ | async) ?? []" class="mat-elevation-z2" style="width:100%">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let t">{{t.id}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="titulo">
+        <th mat-header-cell *matHeaderCellDef>Título</th>
+        <td mat-cell *matCellDef="let t"><strong>{{t.titulo}}</strong></td>
+      </ng-container>
+
+      <ng-container matColumnDef="categoria">
+        <th mat-header-cell *matHeaderCellDef>Categoría</th>
+        <td mat-cell *matCellDef="let t">{{t.categoriaNombre}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="prioridad">
+        <th mat-header-cell *matHeaderCellDef>Prioridad</th>
+        <td mat-cell *matCellDef="let t">
+          <span [class]="t.prioridadClass">{{t.prioridad | titlecase}}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="estatus">
+        <th mat-header-cell *matHeaderCellDef>Estatus</th>
+        <td mat-cell *matCellDef="let t">{{estatusLabels[t.estatus]}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="agente">
+        <th mat-header-cell *matHeaderCellDef>Agente</th>
+        <td mat-cell *matCellDef="let t">{{t.agenteNombre ?? '—'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef>Creado</th>
+        <td mat-cell *matCellDef="let t">{{t.fechaCreacion | date:'dd/MM/yyyy'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="comentarios">
+        <th mat-header-cell *matHeaderCellDef>💬</th>
+        <td mat-cell *matCellDef="let t">{{t.totalComentarios}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          style="cursor:pointer"
+          [routerLink]="['/tickets', row.id]"></tr>
+    </table>
+
+    <!-- Paginacion -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;" *ngIf="(totalPaginas$ | async) as tp">
+      <span>Total: {{totalRegistros$ | async}} tickets</span>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <button mat-icon-button
+          [disabled]="paginaActual <= 1"
+          (click)="cambiarPagina(paginaActual - 1)">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <span>Pág. {{paginaActual}} / {{tp}}</span>
+        <button mat-icon-button
+          [disabled]="paginaActual >= tp"
+          (click)="cambiarPagina(paginaActual + 1)">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

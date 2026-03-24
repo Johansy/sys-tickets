@@ -1,0 +1,17 @@
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\bin\Release\net10.0\SysTickets.Services.deps.json
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\bin\Release\net10.0\SysTickets.Services.dll
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\bin\Release\net10.0\SysTickets.Services.pdb
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\bin\Release\net10.0\SysTickets.Core.dll
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\bin\Release\net10.0\SysTickets.Data.dll
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\bin\Release\net10.0\SysTickets.Core.pdb
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\bin\Release\net10.0\SysTickets.Data.pdb
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\obj\Release\net10.0\SysTickets.Services.csproj.AssemblyReference.cache
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\obj\Release\net10.0\SysTickets.Services.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\obj\Release\net10.0\SysTickets.Services.AssemblyInfoInputs.cache
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\obj\Release\net10.0\SysTickets.Services.AssemblyInfo.cs
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\obj\Release\net10.0\SysTickets.Services.csproj.CoreCompileInputs.cache
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\obj\Release\net10.0\SysTicke.495E78C5.Up2Date
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\obj\Release\net10.0\SysTickets.Services.dll
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\obj\Release\net10.0\refint\SysTickets.Services.dll
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\obj\Release\net10.0\SysTickets.Services.pdb
+c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\obj\Release\net10.0\ref\SysTickets.Services.dll

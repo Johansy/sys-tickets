@@ -1,0 +1,16 @@
+/* Base visual fallback to keep the app readable even if Material theming fails. */
+html,
+body {
+	min-height: 100%;
+	background: #f6f8fb;
+	color: #1f2937;
+}
+
+body {
+	margin: 0;
+}
+
+app-root {
+	display: block;
+	min-height: 100vh;
+}

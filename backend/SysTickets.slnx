@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="SysTickets.API/SysTickets.API.csproj" />
+  <Project Path="SysTickets.Core/SysTickets.Core.csproj" />
+  <Project Path="SysTickets.Data/SysTickets.Data.csproj" />
+  <Project Path="SysTickets.Services/SysTickets.Services.csproj" />
+</Solution>
