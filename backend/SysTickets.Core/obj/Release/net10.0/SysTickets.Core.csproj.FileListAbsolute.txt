@@ -9,3 +9,4 @@ c:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Core\obj\Release\net
 c:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Core\obj\Release\net10.0\refint\SysTickets.Core.dll
 c:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Core\obj\Release\net10.0\SysTickets.Core.pdb
 c:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Core\obj\Release\net10.0\ref\SysTickets.Core.dll
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Core\obj\Release\net10.0\SysTickets.Core.sourcelink.json

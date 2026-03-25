@@ -1,8 +1,11 @@
 using SysTickets.Core.Interfaces;
 using SysTickets.Data;
 using SysTickets.Services;
+using Dapper;
 
 var builder = WebApplication.CreateBuilder(args);
+
+DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 // Servicios
 builder.Services.AddControllers();

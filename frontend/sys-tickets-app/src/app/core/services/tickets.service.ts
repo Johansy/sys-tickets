@@ -9,9 +9,19 @@ import { PaginateResult, TicketDetalle, TicketListItem,
 @Injectable({providedIn: 'root'})
 export class TicketsService {
     private readonly apiUrl = environment.apiUrl;
-    //Simula el usuario actual - en producción esto vendría del servicio de autenticación
-    private usuarioId = 1; // ID del usuario actual (simulado)
+    // Simula el usuario actual; se persiste para evitar volver siempre al usuario 1.
+    private usuarioId = Number(localStorage.getItem('usuarioIdActual') ?? '1');
     constructor (private http: HttpClient) {}
+
+    setUsuarioActual(usuarioId: number): void {
+        this.usuarioId = usuarioId;
+        localStorage.setItem('usuarioIdActual', usuarioId.toString());
+    }
+
+    getUsuarioActual(): number {
+        return this.usuarioId;
+    }
+
     private get headers() {
         return { 'X-Usuario-Id': this.usuarioId.toString() };
     }
@@ -55,5 +65,9 @@ export class TicketsService {
     }
     getAgentes(): Observable<Usuario[]> {
         return this.http.get<Usuario[]>(`${this.apiUrl}/catalogos/agentes`);
+    }
+
+    getUsuarios(): Observable<Usuario[]> {
+        return this.http.get<Usuario[]>(`${this.apiUrl}/catalogos/usuarios`);
     }
 }

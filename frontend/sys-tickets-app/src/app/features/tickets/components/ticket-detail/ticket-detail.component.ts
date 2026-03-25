@@ -18,6 +18,7 @@ export class TicketDetailComponent implements OnInit {
     loading$: Observable<boolean>;
     error$: Observable<string | null>;
     agentes$: Observable<Usuario[]>;
+    mensajeOperacion: string | null = null;
 
     nuevoComentario = '';
     esInterno = false;
@@ -46,6 +47,8 @@ export class TicketDetailComponent implements OnInit {
 
     cambiarEstatus(ticketDetalle: TicketDetalle): void {
         if (!this.nuevoEstatus) return;
+
+        this.mensajeOperacion = null;
         this.store.dispatch(TicketsActions.cambiarEstatus({ id: ticketDetalle.id, estatus: this.nuevoEstatus }));
         this.nuevoEstatus = '';
     }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SysTickets.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c2a359eafb4f7aacc4d1fc37a8b60fab6dfe8b8")]
 [assembly: System.Reflection.AssemblyProductAttribute("SysTickets.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SysTickets.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

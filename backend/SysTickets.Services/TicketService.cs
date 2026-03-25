@@ -9,6 +9,12 @@ public class TicketService: ITicketService
     private readonly ITicketRepository _ticketRepo;
     private readonly ICatalogoRepository _catalogoRepo;
 
+    private static string NormalizarEstatus(string estatus)
+        => estatus.Trim().ToLowerInvariant().Replace(" ", "_");
+
+    private static bool EsRolAgente(string? rol)
+        => string.Equals(rol?.Trim(), "Agente", StringComparison.OrdinalIgnoreCase);
+
     public TicketService(ITicketRepository ticketRepo, ICatalogoRepository catalogoRepo)
     {
         _ticketRepo = ticketRepo;
@@ -47,27 +53,25 @@ public class TicketService: ITicketService
         var ticket = await _ticketRepo.ObtenerPorIdAsync(id) ?? 
                 throw new KeyNotFoundException($"Ticket {id} no encontrado.");
 
-        var estatusNormalizado = request.Estatus.Trim().ToLowerInvariant().Replace(" ", "_");
+        var estatusNormalizado = NormalizarEstatus(request.Estatus);
 
-        if (estatusNormalizado == "en_progreso" && ticket.AsignadoA is null)
+
+        if (estatusNormalizado == "en_progreso" && ticket.AsignadoA == null)
             throw new InvalidOperationException(
                 "El Ticket no puede pasar a 'En Progreso' sin un agente asignado.");
 
-            DateTime? fechaResolucion = estatusNormalizado is "resuelto" or "cerrado" ? 
-                DateTime.UtcNow : ticket.FechaResolucion;
+        DateTime? fechaResolucion = estatusNormalizado is "resuelto" or "cerrado" ? 
+            DateTime.UtcNow : ticket.FechaResolucion;
 
-            await _ticketRepo.CambiarEstatusAsync(id, estatusNormalizado, fechaResolucion);
-
-            // Registrar historial
-            await _ticketRepo.RegistrarHistorialAsync(new HistorialTicket
-            {
-                TicketId = id,
-                CampoModificado = "estatus",
-                ValorAnterior = ticket.Estatus,
-                ValorNuevo = estatusNormalizado,
-                ModificadoPor = usuarioId
-            });
-        }
+        await _ticketRepo.CambiarEstatusConHistorialAsync(id, estatusNormalizado, fechaResolucion, new HistorialTicket
+        {
+            TicketId = id,
+            CampoModificado = "estatus",
+            ValorAnterior = ticket.Estatus,
+            ValorNuevo = estatusNormalizado,
+            ModificadoPor = usuarioId
+        });
+    }
 
     // REGLA 3 - Solo se puede asignar un usuario con rol de agente.
     // BONUS (Extra) - Registra en el historial al reasignar un agente
@@ -76,21 +80,22 @@ public class TicketService: ITicketService
         var ticket = await _ticketRepo.ObtenerPorIdAsync(id) ??
             throw new KeyNotFoundException($"Ticket {id} no encontrado.");
 
+        Usuario? agenteAnterior = null;
+        if (ticket.AsignadoA.HasValue && ticket.AsignadoA.Value > 0)
+            agenteAnterior = await _catalogoRepo.ObtenerUsuarioPorIdAsync(ticket.AsignadoA.Value);
+
         var agente = await _catalogoRepo.ObtenerUsuarioPorIdAsync(request.AgenteId) ?? 
             throw new KeyNotFoundException($"Usuario {request.AgenteId} no encontrado.");
 
-        if (agente.Rol != "Agente")
+        if (!EsRolAgente(agente.Rol))
             throw new InvalidOperationException($"El usuario {agente.Nombre} no tiene rol de agente.");
 
-        await _ticketRepo.AsignarAgenteAsync(id, request.AgenteId);
-
-        // Registrar historial
-        await _ticketRepo.RegistrarHistorialAsync(new HistorialTicket
+        await _ticketRepo.AsignarAgenteConHistorialAsync(id, request.AgenteId, new HistorialTicket
         {
             TicketId = id,
             CampoModificado = "asignado_a",
-            ValorAnterior = ticket.AsignadoA?.ToString() ?? "null",
-            ValorNuevo = request.AgenteId.ToString(),
+            ValorAnterior = agenteAnterior?.Nombre ?? "Sin asignar",
+            ValorNuevo = agente.Nombre,
             ModificadoPor = usuarioId
         });
     }
@@ -101,7 +106,7 @@ public class TicketService: ITicketService
         var ticket = await _ticketRepo.ObtenerPorIdAsync(ticketId) ??
             throw new KeyNotFoundException($"Ticket {ticketId} no encontrado.");
 
-        if (ticket.Estatus == "cerrado")
+        if (NormalizarEstatus(ticket.Estatus) == "cerrado")
             throw new InvalidOperationException(
                 "No se pueden agregar comentarios a un ticket cerrado. Cambie el estatus primeramente.");
 

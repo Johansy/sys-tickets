@@ -1,0 +1,16 @@
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\bin\Debug\net10.0\SysTickets.Data.deps.json
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\bin\Debug\net10.0\SysTickets.Data.dll
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\bin\Debug\net10.0\SysTickets.Data.pdb
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\bin\Debug\net10.0\SysTickets.Core.dll
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\bin\Debug\net10.0\SysTickets.Core.pdb
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\obj\Debug\net10.0\SysTickets.Data.csproj.AssemblyReference.cache
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\obj\Debug\net10.0\SysTickets.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\obj\Debug\net10.0\SysTickets.Data.AssemblyInfoInputs.cache
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\obj\Debug\net10.0\SysTickets.Data.AssemblyInfo.cs
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\obj\Debug\net10.0\SysTickets.Data.csproj.CoreCompileInputs.cache
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\obj\Debug\net10.0\SysTickets.Data.sourcelink.json
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\obj\Debug\net10.0\SysTicke.39F584B7.Up2Date
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\obj\Debug\net10.0\SysTickets.Data.dll
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\obj\Debug\net10.0\refint\SysTickets.Data.dll
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\obj\Debug\net10.0\SysTickets.Data.pdb
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\obj\Debug\net10.0\ref\SysTickets.Data.dll

@@ -33,13 +33,27 @@ on(TicketsActions.cargarDetalleFailure, (state, { error }) => ({
 
 //Cambiar estatus
 on(TicketsActions.cambiarEstatus, (state) => ({
-    ...state, creando: true, errorCrear: null
+    ...state, creando: true, errorCrear: null, errorDetalle: null
 })),
 on(TicketsActions.cambiarEstatusSuccess, state => ({
     ...state, creando: false            
 })),
 on(TicketsActions.cambiarEstatusFailure, (state, { error }) => ({
-    ...state, creando: false, errorCrear: error
+    ...state, creando: false, errorDetalle: error
+})),
+
+on(TicketsActions.asignarAgente, (state) => ({
+    ...state, errorDetalle: null
+})),
+on(TicketsActions.asignarAgenteFailure, (state, { error }) => ({
+    ...state, errorDetalle: error
+})),
+
+on(TicketsActions.agregarComentario, (state) => ({
+    ...state, errorDetalle: null
+})),
+on(TicketsActions.agregarComentarioFailure, (state, { error }) => ({
+    ...state, errorDetalle: error
 })),
 
 //Catalogos

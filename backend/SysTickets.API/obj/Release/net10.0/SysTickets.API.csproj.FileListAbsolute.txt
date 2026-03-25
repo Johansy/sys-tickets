@@ -41,3 +41,4 @@ c:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.API\obj\Release\net1
 c:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.API\obj\Release\net10.0\SysTickets.API.pdb
 c:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.API\obj\Release\net10.0\SysTickets.API.genruntimeconfig.cache
 c:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.API\obj\Release\net10.0\ref\SysTickets.API.dll
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.API\obj\Release\net10.0\SysTickets.API.sourcelink.json

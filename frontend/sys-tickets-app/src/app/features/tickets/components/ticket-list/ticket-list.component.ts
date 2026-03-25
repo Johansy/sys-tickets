@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { TicketListItem, Categoria, Usuario } from "../../../../core/models"; 
+import { TicketsService } from "../../../../core/services/tickets.service";
 import * as TicketsActions from "../../store/tickets.actions";
 import { selectTicketsPrioridad, selectLoadingList, selectErrorList,
     selectTotalRegistros, selectTotalPaginas, selectFiltros, 
@@ -23,6 +24,8 @@ import { selectTicketsPrioridad, selectLoadingList, selectErrorList,
     filtros$: Observable<any>;
     categorias$: Observable<Categoria[]>;
     agentes$: Observable<Usuario[]>;
+    usuarios$: Observable<Usuario[]> = of([]);
+    usuarioActualId = '';
 
     displayedColumns: string[] = ['id', 'titulo', 'categoria', 'prioridad', 'estatus', 'agente', 'fecha', 'comentarios'];
 
@@ -43,7 +46,7 @@ import { selectTicketsPrioridad, selectLoadingList, selectErrorList,
     filtroActual    = 1;
     paginaActual = 1;
 
-    constructor(private store: Store) {
+    constructor(private store: Store, private ticketsService: TicketsService) {
         this.tickets$ = this.store.select(selectTicketsPrioridad);
         this.loading$ = this.store.select(selectLoadingList);
         this.error$ = this.store.select(selectErrorList);
@@ -56,6 +59,8 @@ import { selectTicketsPrioridad, selectLoadingList, selectErrorList,
 
     ngOnInit(): void {
         this.store.dispatch(TicketsActions.cargarCatalogos());
+        this.usuarioActualId = this.ticketsService.getUsuarioActual().toString();
+        this.usuarios$ = this.ticketsService.getUsuarios();
         this.filtros$.subscribe(f => {
             this.filtroTexto = f.texto ?? '';
             this.filtroCategoria = f.categoriaId?.toString() ?? '';
@@ -90,5 +95,10 @@ import { selectTicketsPrioridad, selectLoadingList, selectErrorList,
 
     cambiarPagina(pagina: number): void {
         this.buscar(pagina);
+    }
+
+    cambiarUsuarioActual(): void {
+        if (!this.usuarioActualId) return;
+        this.ticketsService.setUsuarioActual(Number(this.usuarioActualId));
     }
 }

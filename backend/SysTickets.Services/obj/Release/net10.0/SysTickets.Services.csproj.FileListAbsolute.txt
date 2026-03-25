@@ -15,3 +15,4 @@ c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\obj\Release
 c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\obj\Release\net10.0\refint\SysTickets.Services.dll
 c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\obj\Release\net10.0\SysTickets.Services.pdb
 c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Services\obj\Release\net10.0\ref\SysTickets.Services.dll
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Services\obj\Release\net10.0\SysTickets.Services.sourcelink.json

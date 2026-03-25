@@ -60,6 +60,10 @@
         <button mat-flat-button color="primary" [disabled]="!agenteSeleccionado" (click)="asignarAgente(ticket)">
           Asignar
         </button>
+
+        <div style="width:100%" *ngIf="mensajeOperacion || (error$ | async) as errorMensaje">
+          <mat-error>{{ mensajeOperacion || errorMensaje }}</mat-error>
+        </div>
       </mat-card-actions>
     </mat-card>
 

@@ -1,6 +1,4 @@
-# Gestor de Tickets de Soporte
-
-Prueba técnica — Desarrollador Senior Full Stack
+# Sistema de Tickets
 
 **Stack:** PostgreSQL 14 · .NET Core 6 Web API · Angular 16 + NgRx
 
@@ -9,11 +7,11 @@ Prueba técnica — Desarrollador Senior Full Stack
 ## Requisitos
 
 - Docker + Docker Compose  
-  _O bien: .NET 6 SDK, Node 18, PostgreSQL 14 (ejecución local)_
+  _O bien: .NET 10.0.201 SDK, Node 24.14.0, PostgreSQL 14 (ejecución local)_
 
 ---
 
-## Levantar con Docker Compose (recomendado)
+## Levantar con Docker Compose
 
 ```bash
 docker-compose up --build
@@ -21,7 +19,7 @@ docker-compose up --build
 
 | Servicio   | URL                          |
 |------------|------------------------------|
-| Frontend   | http://localhost:4200        |
+| Frontend   | http://localhost:9000       |
 | API        | http://localhost:5000        |
 | Swagger UI | http://localhost:5000/swagger|
 | PostgreSQL | localhost:5432               |
@@ -35,30 +33,30 @@ docker-compose up --build
 ### Base de datos
 
 ```bash
-psql -U postgres -c "CREATE DATABASE support_tickets;"
-psql -U postgres -d support_tickets -f database/01_schema.sql
-psql -U postgres -d support_tickets -f database/02_functions.sql
-psql -U postgres -d support_tickets -f database/03_indexes.sql
-psql -U postgres -d support_tickets -f database/04_seed.sql
+psql -U postgres -c "CREATE DATABASE sys_tickets;"
+psql -U postgres -d sys_tickets -f database/01_schema.sql
+psql -U postgres -d sys_tickets -f database/02_functions.sql
+psql -U postgres -d sys_tickets -f database/03_indexes.sql
+psql -U postgres -d sys_tickets -f database/04_seed.sql
 ```
 
 ### Backend
 
 ```bash
-cd backend/SupportTickets
-dotnet run --project SupportTickets.API
+cd backend/
+dotnet run --project SysTickets.API
 # API disponible en http://localhost:5000
 ```
 
-> Ajusta el connection string en `SupportTickets.API/appsettings.json` si es necesario.
+> Ajusta el connection string en `SysTickets.API/appsettings.json` si es necesario.
 
 ### Frontend
 
 ```bash
-cd frontend/support-tickets-app
+cd frontend/sys-tickets-app
 npm install
 npm start
-# App disponible en http://localhost:4200
+# App disponible en http://localhost:9000
 ```
 
 ---
@@ -66,18 +64,18 @@ npm start
 ## Estructura del proyecto
 
 ```
-support-tickets/
+sys-tickets/
 ├── database/
 │   ├── 01_schema.sql        # Tablas + historial
 │   ├── 02_functions.sql     # buscar_tickets() PL/pgSQL
 │   ├── 03_indexes.sql       # Índices comentados
 │   └── 04_seed.sql          # 8 usuarios, 4 categorías, 30 tickets, 60 comentarios
-├── backend/SupportTickets/
-│   ├── SupportTickets.Core/     # Modelos, DTOs, Interfaces
-│   ├── SupportTickets.Data/     # Repositorios (Dapper + Npgsql)
-│   ├── SupportTickets.Services/ # Lógica de negocio
-│   └── SupportTickets.API/      # Controllers, DI, Swagger
-├── frontend/support-tickets-app/
+├── backend/
+│   ├── SysTickets.Core/     # Modelos, DTOs, Interfaces
+│   ├── SysTickets.Data/     # Repositorios (Dapper + Npgsql)
+│   ├── SysTickets.Services/ # Lógica de negocio
+│   └── SysTickets.API/      # Controllers, DI, Swagger
+├── frontend/sys-tickets-app/
 │   └── src/app/
 │       ├── core/            # Modelos TS + TicketsService
 │       └── features/tickets/

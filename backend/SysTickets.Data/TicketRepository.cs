@@ -145,6 +145,35 @@ public class TicketRepository: ITicketRepository
         return result > 0;
     }
 
+    public async Task CambiarEstatusConHistorialAsync(int id, string estatus, DateTime? fechaResolucion, HistorialTicket historial)
+    {
+        using var conn = CreateConnection();
+        await conn.OpenAsync();
+        await using var transaction = await conn.BeginTransactionAsync();
+
+        try
+        {
+            await conn.ExecuteAsync(
+                @"UPDATE tickets SET estatus = @Estatus, fecha_resolucion = @FechaResolucion
+                  WHERE id = @Id;",
+                new { Id = id, Estatus = estatus, FechaResolucion = fechaResolucion },
+                transaction);
+
+            await conn.ExecuteAsync(
+                @"INSERT INTO ticket_historial (ticket_id, campo_modificado, valor_anterior, valor_nuevo, modificado_por)
+                  VALUES (@TicketId, @CampoModificado, @ValorAnterior, @ValorNuevo, @ModificadoPor);",
+                historial,
+                transaction);
+
+            await transaction.CommitAsync();
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
+    }
+
     public async Task<bool> AsignarAgenteAsync(int id, int agenteId)
     {
         using var conn = CreateConnection();
@@ -153,6 +182,35 @@ public class TicketRepository: ITicketRepository
               WHERE id = @Id;",
             new {id, agenteId});
         return result > 0;
+    }
+
+    public async Task AsignarAgenteConHistorialAsync(int id, int agenteId, HistorialTicket historial)
+    {
+        using var conn = CreateConnection();
+        await conn.OpenAsync();
+        await using var transaction = await conn.BeginTransactionAsync();
+
+        try
+        {
+            await conn.ExecuteAsync(
+                @"UPDATE tickets SET asignado_a = @AgenteId
+                  WHERE id = @Id;",
+                new { Id = id, AgenteId = agenteId },
+                transaction);
+
+            await conn.ExecuteAsync(
+                @"INSERT INTO ticket_historial (ticket_id, campo_modificado, valor_anterior, valor_nuevo, modificado_por)
+                  VALUES (@TicketId, @CampoModificado, @ValorAnterior, @ValorNuevo, @ModificadoPor);",
+                historial,
+                transaction);
+
+            await transaction.CommitAsync();
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 
     public async Task<int> AgregarComentarioAsync(Comentario comentario)

@@ -13,3 +13,4 @@ c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Data\obj\Release\net
 c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Data\obj\Release\net10.0\refint\SysTickets.Data.dll
 c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Data\obj\Release\net10.0\SysTickets.Data.pdb
 c:\Users\5tr1x\source\VSCode\sys-tickets\backend\Systickets.Data\obj\Release\net10.0\ref\SysTickets.Data.dll
+C:\Users\5tr1x\source\VSCode\sys-tickets\backend\SysTickets.Data\obj\Release\net10.0\SysTickets.Data.sourcelink.json

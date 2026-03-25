@@ -23,7 +23,7 @@ INSERT INTO usuarios (nombre, email, rol) VALUES
 
 --30 tickets con diferentes combinaciones de estatus, prioridad, categorías y asignaciones.
 INSERT INTO tickets (titulo, descripcion, categoria_id, prioridad, estatus, creado_por, asignado_a, fecha_creacion, fecha_resolucion) VALUES
-('No puedo acceder al portal',               'Mi usuario no tiene acceso desde ayer.',                     3,'urgente', 'en_progreso',1,6, NOW()-INTERVAL '5 days',  NULL),
+('No puedo acceder al portal',               'Mi usuario no tiene acceso desde ayer.',                     3,'urgente', 'cerrado',1,6, NOW()-INTERVAL '5 days',  NULL),
 ('Error en factura del mes de octubre',      'La factura muestra un cobro duplicado.',                     1,'alta',    'abierto',    2,NULL,NOW()-INTERVAL '4 days',  NULL),
 ('PC no enciende tras actualización',        'Mi equipo no inicia después de actualizar Windows.',         2,'alta',    'en_progreso',3,7, NOW()-INTERVAL '3 days',  NULL),
 ('Solicitud de nueva contraseña',            'Olvidé mi contraseña y el enlace de recuperación expiró.',  3,'media',   'resuelto',   4,6, NOW()-INTERVAL '7 days',  NOW()-INTERVAL '6 days'),
@@ -31,7 +31,7 @@ INSERT INTO tickets (titulo, descripcion, categoria_id, prioridad, estatus, crea
 ('Cobro incorrecto en plan Premium',         'Se me cobró tarifa básica en lugar de Premium.',             1,'alta',    'abierto',    1,NULL,NOW()-INTERVAL '1 day',   NULL),
 ('Impresora de red piso 3 no responde',      'La impresora compartida del piso 3 no aparece en red.',     2,'media',   'en_progreso',2,7, NOW()-INTERVAL '6 days',  NULL),
 ('Acceso a carpeta compartida denegado',     'Error de permisos al acceder a \\servidor\proyectos.',      3,'media',   'abierto',    3,NULL,NOW()-INTERVAL '2 days',  NULL),
-('Correos rebotan al enviar',                'Los correos enviados desde mi cuenta no llegan.',            2,'alta',    'en_progreso',4,8, NOW()-INTERVAL '3 days',  NULL),
+('Correos rebotan al enviar',                'Los correos enviados desde mi cuenta no llegan.',            2,'alta',    'cerrado',4,8, NOW()-INTERVAL '3 days',  NULL),
 ('Consulta descuento por volumen',           'Quiero saber si hay descuento para 20 licencias.',           4,'baja',    'resuelto',   5,6, NOW()-INTERVAL '10 days', NOW()-INTERVAL '9 days'),
 ('Monitor con líneas verticales verdes',     'Monitor Dell muestra líneas verdes intermitentes.',          2,'baja',    'abierto',    1,NULL,NOW()-INTERVAL '1 day',   NULL),
 ('No se puede exportar reporte a PDF',       'El botón de exportar PDF no hace nada al dar clic.',         2,'media',   'en_progreso',2,7, NOW()-INTERVAL '4 days',  NULL),
@@ -42,7 +42,7 @@ INSERT INTO tickets (titulo, descripcion, categoria_id, prioridad, estatus, crea
 ('Código SMS de autenticación no llega',     'El SMS de 2FA no llega a mi celular.',                       3,'alta',    'en_progreso',2,8, NOW()-INTERVAL '2 days',  NULL),
 ('Solicitud de reembolso suscripción',       'Quiero reembolso de mi suscripción anual.',                  1,'alta',    'abierto',    3,NULL,NOW()-INTERVAL '1 day',   NULL),
 ('Teclado inalámbrico sin respuesta',        'El teclado dejó de funcionar sin motivo aparente.',          2,'baja',    'cerrado',    4,7, NOW()-INTERVAL '25 days', NOW()-INTERVAL '24 days'),
-('Error en cálculo de horas extra',          'El sistema calcula incorrectamente las horas extra.',        4,'alta',    'en_progreso',5,6, NOW()-INTERVAL '3 days',  NULL),
+('Error en cálculo de horas extra',          'El sistema calcula incorrectamente las horas extra.',        4,'alta',    'cerrado',5,6, NOW()-INTERVAL '3 days',  NULL),
 ('Sin acceso al sistema de nómina',          'Error de permisos al intentar entrar a nómina.',             3,'urgente', 'abierto',    1,NULL,NOW()-INTERVAL '6 hours', NULL),
 ('Licencia de antivirus expirada',           'El antivirus muestra aviso de licencia vencida.',            2,'media',   'resuelto',   2,8, NOW()-INTERVAL '12 days', NOW()-INTERVAL '11 days'),
 ('Factura sin RFC del receptor',             'Mi factura electrónica no incluye mi RFC.',                  1,'media',   'abierto',    3,NULL,NOW()-INTERVAL '2 days',  NULL),
